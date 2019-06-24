@@ -140,6 +140,8 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             throw new NotImplementedException();
         }
 
+        
+        //To calculate the minimum value of any one parameter i.e. proteins, fat etc.
         public static List<int> Min(int[] a)
         {
             int min = 999;
@@ -157,6 +159,8 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             return l;
         }
 
+        
+        //To calculate the maximum value of any one parameter i.e. proteins, fat etc.
         public static List<int> Max(int[] a)
         {
             int max = -999;
@@ -174,6 +178,8 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             return l;
         }
 
+        
+        //To calculate the minimum value of any one parameter i.e. proteins, fat etc within the limited meals.
         public static List<int> Tmin(int[] a, List<int> b)
         {
             int min = 999;
@@ -191,6 +197,8 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             return l;
         }
 
+        
+        //To calculate the maximum value of any one parameter i.e. proteins, fat etc within the limited meals.
         public static List<int> Tmax(int[] a, List<int> b)
         {
             int max = -999;
