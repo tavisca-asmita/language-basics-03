@@ -41,179 +41,176 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         public static int[] SelectMeals(int[] protein, int[] carbs, int[] fat, string[] dietPlans)
         {
             // Add your code here.
+            List<int> mealList, tempList;
             int[] calorie = new int[fat.Length];
             int[] meal = new int[dietPlans.Length];
+            int length;
             
-            for (int i = 0; i < fat.Length; i++)
+            for (int index = 0; index < fat.Length; index++)  //calculating calorie array
             {
-                calorie[i] = protein[i]*5 + carbs[i] * 5 + fat[i] * 9;
+                calorie[index] = protein[index]*5 + carbs[index] * 5 + fat[index] * 9;
             }
             
-            for (int i = 0; i < dietPlans.Length; i++)
+            for (int index = 0; index < dietPlans.Length; index++)
             {
-                List<int> al = new List<int>();
-                List<int> l = new List<int>();
+                 mealList = new List<int>();
+                 tempList = new List<int>();
 
-                foreach (char x in dietPlans[i])
+                foreach (char foodType in dietPlans[index])
                 {
                     
-                    if (al.Count() == 0)
+                    if (mealList.Count() == 0)   //to check the food without any ties
                     {
-                        switch (x)
+                        switch (foodType)
                         {
                             case 'P':
-                                al = Max(protein);
+                                mealList = Max(protein);
                                 break;
                             case 'F':
-                                al = Max(fat);
+                                mealList = Max(fat);
                                 break;
                             case 'C':
-                                al = Max(carbs);
+                                mealList = Max(carbs);
                                 break;
                             case 'T':
-                                al = Max(calorie);
+                                mealList = Max(calorie);
                                 break;
                             case 'p':
-                                al = Min(protein);
+                                mealList = Min(protein);
                                 break;
                             case 'f':
-                                al = Min(fat);
+                                mealList = Min(fat);
                                 break;
                             case 'c':
-                                al = Min(carbs);
+                                mealList = Min(carbs);
                                 break;
                             case 't':
-                                al = Min(calorie);
+                                mealList = Min(calorie);
                                 break;                            
                             default :                                
                                 break;
                         }
                     }
 
-                    else
+                    else                      //to check the food when tie between two meals occur
                     {
-                        switch (x)
+                        switch (foodType)
                         {
                             case 'P':
-                                al = Tmax(protein,al);
+                                mealList = TieMax(protein,mealList);
                                 break;
                             case 'F':
-                                al = Tmax(fat,al);
+                                mealList = TieMax(fat, mealList);
                                 break;
                             case 'C':
-                                al = Tmax(carbs,al);
+                                mealList = TieMax(carbs, mealList);
                                 break;
                             case 'T':
-                                al = Tmax(calorie,al);
+                                mealList = TieMax(calorie, mealList);
                                 break;
                             case 'p':
-                                al = Tmin(protein,al);
+                                mealList = TieMin(protein, mealList);
                                 break;
                             case 'f':
-                                al = Tmin(fat,al);
+                                mealList = TieMin(fat, mealList);
                                 break;
                             case 'c':
-                                al = Tmin(carbs,al);
+                                mealList = TieMin(carbs, mealList);
                                 break;
                             case 't':
-                                al = Tmin(calorie,al);
+                                mealList = TieMin(calorie, mealList);
                                 break;
                             default:
                                 break;
                         }
                     }
+
                     
-                    int a = al.Count();
+                    length = mealList.Count();
                                                             
-                    if (a > 0)
+                    if (length > 0)
                     {
-                        meal[i] = al[0];
-                        l.Add(al[0]);
+                        meal[index] = mealList[0];
+                    
+                        tempList.Add(mealList[0]);
                     }
                        
                     else
-                        meal[i] = l[0];
+                        meal[index] = tempList[0];
+
+
                 }
             }
-            
             return meal;
-            throw new NotImplementedException();
+            
         }
 
-        
-        //To calculate the minimum value of any one parameter i.e. proteins, fat etc.
-        public static List<int> Min(int[] a)
+        public static List<int> Min(int[] diet)
         {
-            int min = 999;
-            List<int> l = new List<int>();
-            for(int i = 0; i < a.Length; i++)
+            int minValue = 999;
+            List<int> mealList = new List<int>();
+            for(int index = 0; index < diet.Length; index++)
             {
-                if (a[i] < min)
-                    min = a[i];             
+                if (diet[index] < minValue)
+                    minValue = diet[index];             
             }
-            for(int i = 0; i < a.Length; i++)
+            for(int index = 0; index < diet.Length; index++)
             {
-                if (a[i] == min)
-                    l.Add(i);
+                if (diet[index] == minValue)
+                    mealList.Add(index);
             }
-            return l;
+            return mealList;
         }
 
-        
-        //To calculate the maximum value of any one parameter i.e. proteins, fat etc.
-        public static List<int> Max(int[] a)
+        public static List<int> Max(int[] diet)
         {
-            int max = -999;
-            List<int> l = new List<int>();
-            for (int i = 0; i < a.Length; i++)
+            int maxValue = -999;
+            List<int> mealList = new List<int>();
+            for (int index = 0; index < diet.Length; index++)
             {
-                if (a[i] > max)
-                    max = a[i];
+                if (diet[index] > maxValue)
+                    maxValue = diet[index];
             }
-            for (int i = 0; i < a.Length; i++)
+            for (int index = 0; index < diet.Length; index++)
             {
-                if (a[i] == max)
-                    l.Add(i);
+                if (diet[index] == maxValue)
+                    mealList.Add(index);
             }
-            return l;
+            return mealList;
         }
 
-        
-        //To calculate the minimum value of any one parameter i.e. proteins, fat etc within the limited meals.
-        public static List<int> Tmin(int[] a, List<int> b)
+        public static List<int> TieMin(int[] diet, List<int> meal)
         {
-            int min = 999;
-            List<int> l = new List<int>();
-            foreach (int i in b)
+            int minValue = 999;
+            List<int> mealList = new List<int>();
+            foreach (int index in meal)
             {
-                if (a[i] < min)
-                    min = a[i];
+                if (diet[index] < minValue)
+                    minValue = diet[index];
             }
-            foreach (int i in b)
+            foreach (int index in meal)
             {
-                if (a[i] == min)
-                    l.Add(i);
+                if (diet[index] == minValue)
+                    mealList.Add(index);
             }
-            return l;
+            return mealList;
         }
 
-        
-        //To calculate the maximum value of any one parameter i.e. proteins, fat etc within the limited meals.
-        public static List<int> Tmax(int[] a, List<int> b)
+        public static List<int> TieMax(int[] diet, List<int> meal)
         {
-            int max = -999;
-            List<int> l = new List<int>();
-            foreach (int i in b)
+            int maxValue = -999;
+            List<int> mealList = new List<int>();
+            foreach (int index in meal)
             {
-                if (a[i] > max)
-                    max = a[i];
+                if (diet[index] > maxValue)
+                    maxValue = diet[index];
             }
-            foreach (int i in b)
+            foreach (int index in meal)
             {
-                if (a[i] == max)
-                    l.Add(i);
+                if (diet[index] == maxValue)
+                    mealList.Add(index);
             }
-            return l;
+            return mealList;
         }
     }
 }
